@@ -20,7 +20,7 @@ typedef struct ensemble
   size_t size;
 }  *Ens;
 
-void initOrderedSet();
+Ens initOrderedSet();
 void freeOtderedSet();
 int getNumberElt(Ens e);
 int insertValue(Ens Str, int e);
