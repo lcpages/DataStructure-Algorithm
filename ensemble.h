@@ -17,7 +17,7 @@
 typedef struct ensemble
 {
   int val;
-  int* suiv;
+  int* suiv
 }  *Ens;
 
 Ens initOrderedSet();
