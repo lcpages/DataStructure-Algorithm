@@ -26,7 +26,7 @@ int getNumberElt(Ens e);
 int insertValue(Ens Str, int e);
 bool contains(Ens Str, int e);
 void printOrderedSet(Ens Str);
-int intersect(Ens Str, Ens Str2);
+Ens intersect(Ens Str, Ens Str2);
 
 
 #endif

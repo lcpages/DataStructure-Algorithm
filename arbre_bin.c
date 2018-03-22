@@ -93,7 +93,57 @@ Node insert(Node abr, char* nouv_mot, int nouv_pos)
   return abr;
 }
 
-Ens find(Node abr, char* mot);
+Ens find(Node abr, char* mot)
+{
+  // si l'arbre est vide
+  if(abr == NULL)
+  {
+    return NULL;
+  }
 
-Ens findCooccurrences(Node abr, char* mot1, char* mot2);
-void printBinarySearchTree(Node abr);
+  // sinon si le mot à la racine est le même
+  else if(strcmp(abr->mot, mot) == 0)
+  {
+    return arb->pos;
+  }
+
+  // sinon recherche dans les branches inférieures
+  else if(strcmp(abr->mot, mot) < 0)
+  {
+    return(find(abr->gauche, mot));
+  }
+  else
+  {
+    return(find(abr->droit, mot));
+  }
+}
+
+Ens findCooccurrences(Node abr, char* mot1, char* mot2)
+{
+  // si les deux mots sont contenus dans l'ABR
+  if((find(abr, mot1) != NULL) && (find(abr, mot2) != NULL))
+  {
+    return intersect(find(abr, mot1), find(abr, mot2));
+  }
+  else
+  {
+    return NULL;
+  }
+}
+
+void printBinarySearchTree(Node abr)
+{
+  if(abr->gauche != NULL)
+  {
+    printBinarySearchTree(abr->gauche);
+  }
+  if(abr != NULL)
+  {
+    printf("%s\n", abr->mot);
+    printOrderedSet(abr->pos);
+  }
+  if(abr->droit != NULL)
+  {
+    printBinarySearchTree(abr->droit);
+  }
+}

@@ -52,7 +52,7 @@ Ens find(Node abr, char* mot);
 Ens findCooccurrences(Node abr, char* mot1, char* mot2);
 
 // affiche l'ABR
-// parcours en largeur ? (ordre alphabétique)
+// parcours infixe (ordre alphabétique)
 void printBinarySearchTree(Node abr);
 
 #endif
