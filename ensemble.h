@@ -21,7 +21,7 @@ typedef struct ensemble
 }  *Ens;
 
 Ens initOrderedSet();
-void freeOtderedSet();
+void freeOrderedSet();
 int getNumberElt(Ens e);
 int insertValue(Ens Str, int e);
 bool contains(Ens Str, int e);

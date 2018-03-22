@@ -14,6 +14,8 @@
 #include <stdbool.h>
 #include <unistd.h>
 
+#include "ensemble.h"
+
 /*
 * structure de l'arbre binaire de recherche
 * mot : mot du noeud
