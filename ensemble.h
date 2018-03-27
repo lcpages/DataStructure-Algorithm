@@ -14,10 +14,10 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-typedef struct ensemble
+typedef struct el
 {
   int val;
-  int* suiv
+  struct el * suiv;
 }  *Ens;
 
 Ens initOrderedSet();
