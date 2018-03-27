@@ -13,6 +13,8 @@
 #include <inttypes.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "ensemble.h"
 
@@ -27,8 +29,8 @@ typedef struct noeud
 {
   char* mot;
   Ens pos;
-  Node gauche;
-  Node droit;
+  struct noeud* gauche;
+  struct noeud* droit;
 }  *Node;
 
 // création/destruction de l'ABR
@@ -54,5 +56,9 @@ Ens findCooccurrences(Node abr, char* mot1, char* mot2);
 // affiche l'ABR
 // parcours infixe (ordre alphabétique)
 void printBinarySearchTree(Node abr);
+
+// création automatique de l'ABR à partir d'un texte
+// argument : chemin vers le fichier du texte
+Node createAuto(char* chemin);
 
 #endif

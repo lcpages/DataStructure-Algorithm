@@ -4,7 +4,6 @@
 * Chloé RICHE et Louis-César Pagès
 */
 
-
 #include "ensemble.h"
 
 Ens initOrderedSet(){
