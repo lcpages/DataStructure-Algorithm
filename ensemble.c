@@ -119,24 +119,24 @@ Ens intersect(Ens st, Ens st2){
 }
 
 
-int main(int argc, char const *argv[]) {
-
-    Ens exemple = initOrderedSet();
-    Ens exemple2 =initOrderedSet();
-    insertValue(exemple, 3);
-    insertValue(exemple, 2);
-    insertValue(exemple, 1);
-    insertValue(exemple2, 6);
-    insertValue(exemple2, 2);
-    insertValue(exemple2, 4);
-    //insertValue(exemple2, 1);
-
-    printOrderedSet(exemple);
-    printOrderedSet(exemple2);
-    printf("\n" );
-    Ens inter = intersect(exemple, exemple2);
-    printOrderedSet(inter);
-    printOrderedSet(exemple2);
-
-    return 0;
-}
+// int main(int argc, char const *argv[]) {
+//
+//     Ens exemple = initOrderedSet();
+//     Ens exemple2 =initOrderedSet();
+//     insertValue(exemple, 3);
+//     insertValue(exemple, 2);
+//     insertValue(exemple, 1);
+//     insertValue(exemple2, 6);
+//     insertValue(exemple2, 2);
+//     insertValue(exemple2, 4);
+//     //insertValue(exemple2, 1);
+//
+//     printOrderedSet(exemple);
+//     printOrderedSet(exemple2);
+//     printf("\n" );
+//     Ens inter = intersect(exemple, exemple2);
+//     printOrderedSet(inter);
+//     printOrderedSet(exemple2);
+//
+//     return 0;
+// }
