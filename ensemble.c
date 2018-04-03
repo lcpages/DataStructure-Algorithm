@@ -35,11 +35,43 @@ int insertValue(Ens st, int e){
             st->val =e;
             return 1;
         }
-        Ens sup = st;
+       Ens sup = st;
 
-        while(sup->suiv != NULL) sup = sup->suiv;
-        sup->suiv = initOrderedSet();
-        sup->suiv->val = e;
+       if(sup->val >e){
+           Ens ex = malloc(sizeof(struct el));
+           ex->suiv = sup->suiv;
+           ex->val = sup->val;
+           sup->val = e;
+           sup->suiv =ex;
+
+           return 1;
+       }
+
+
+        while(sup->suiv != NULL) {
+            if(sup->suiv->val >e){
+                Ens ex = malloc(sizeof(struct el));
+                ex->suiv = sup->suiv;
+                ex->val = e;
+                sup->suiv =ex;
+
+                return 1;
+            }
+            sup = sup->suiv;
+        }
+    //    sup2->suiv->val = e;
+        // while(sup->suiv->val < e && sup->suiv != NULL)  sup = sup->suiv;
+        // if(sup->suiv == NULL){
+        //     sup->suiv = initOrderedSet();
+        //     sup->suiv->val = e;
+        // }else{
+        // Ens ex = malloc(sizeof(struct el));
+        // ex->suiv = sup->suiv;
+        // ex->val = e;
+        // sup->suiv =ex;
+        // }
+        // sup->suiv = initOrderedSet();
+        //sup->suiv->val = e;
 
         return 1;
 }
@@ -88,23 +120,24 @@ Ens intersect(Ens st, Ens st2){
 }
 
 
-// int main(int argc, char const *argv[]) {
-//
-//     Ens exemple = initOrderedSet();
-//     Ens exemple2 =initOrderedSet();
-//     insertValue(exemple, 1);
-//     insertValue(exemple, 2);
-//     insertValue(exemple, 3);
-//     insertValue(exemple2, 6);
-//     insertValue(exemple2, 2);
-//     insertValue(exemple2, 4);
-//
-//     printOrderedSet(exemple);
-//     printOrderedSet(exemple2);
-//     printf("\n" );
-//     Ens inter = intersect(exemple, exemple2);
-//     printOrderedSet(inter);
-//     printOrderedSet(exemple2);
-//
-//     return 0;
-// }
+int main(int argc, char const *argv[]) {
+
+    Ens exemple = initOrderedSet();
+    Ens exemple2 =initOrderedSet();
+    insertValue(exemple, 3);
+    insertValue(exemple, 2);
+    insertValue(exemple, 1);
+    insertValue(exemple2, 6);
+    insertValue(exemple2, 2);
+    insertValue(exemple2, 4);
+    //insertValue(exemple2, 1);
+
+    printOrderedSet(exemple);
+    printOrderedSet(exemple2);
+    printf("\n" );
+    Ens inter = intersect(exemple, exemple2);
+    printOrderedSet(inter);
+    printOrderedSet(exemple2);
+
+    return 0;
+}
