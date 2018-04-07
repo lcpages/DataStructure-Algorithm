@@ -14,7 +14,7 @@ Ens initOrderedSet(){
         return st;
 }
 
-void freeOtderedSet(Ens st){
+void freeOrderedSet(Ens st){
 
         free(st);
 }
