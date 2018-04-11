@@ -9,15 +9,23 @@
 
 int main()
 {
-  Ens a = initOrderedSet();
-  int nb_el = getNumberElt(a);
-  printf("Au départ, %d éléments dans a.\n", nb_el);
+  Node abr = initBinarySearchTree();
+  abr = insert(abr, "fleur", 1);
+  abr = insert(abr, "arbre", 1);
+  abr = insert(abr, "fleur", 3);
+  abr = insert(abr, "etoile", 4);
+  abr = insert(abr, "journée", 7);
 
-  insertValue(a, 10);
-  insertValue(a, 200);
-  //insertValue(a, -1);
-  //insertValue(a, 178);
-  nb_el = getNumberElt(a);
-  printf("Après, %d éléments dans a.\n", nb_el);
+
+  Ens a = find(abr, "arbre");
+  printOrderedSet(a);
+  Ens b = find(abr, "fleur");
+  printOrderedSet(b);
+  Ens c = intersect(a, b);
+  printOrderedSet(c);
+  printf("%d\n", a->val);
+  printf("%d\n", b->val);
+  printf("%d\n", c->val);
+  //printOrderedSet(findCooccurrences(abr, "arbre", "fleur"));
   return 0;
 }

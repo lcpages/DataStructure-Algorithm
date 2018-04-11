@@ -15,8 +15,13 @@ Ens initOrderedSet(){
 }
 
 void freeOrderedSet(Ens st){
-
-        free(st);
+  if(st->suiv == NULL) {
+    free(st);
+  }
+  else {
+    freeOrderedSet(st->suiv);
+    free(st);
+  }
 }
 
 int getNumberElt(Ens st){
@@ -26,11 +31,13 @@ int getNumberElt(Ens st){
     return 0;
   }
   else if(st->suiv == NULL) return 1;
-  return 1 + getNumberElt(st->suiv);
+  else return 1 + getNumberElt(st->suiv);
 }
 
 int insertValue(Ens st, int e){
   // si on ne doit pas insérer l'élément
+  // éléments strictement positifs
+  // inclus une seule fois dans l'arbre
   if(e < 0 || contains(st,e))
   {
     return 0;
@@ -42,78 +49,28 @@ int insertValue(Ens st, int e){
     return 1;
   }
 
-  Ens sup = st;
+  // si e s'insère avant
+  if(st->val > e){
+     Ens ex = malloc(sizeof(struct el));
+     ex->suiv = st->suiv;
+     ex->val = st->val;
+     st->val = e;
+     st->suiv = ex;
 
-  // si la valeur s'insère avant
-  if(sup->val > e)
-  {
-    Ens ex = malloc(sizeof(struct el));
-    ex->val = e;
-    ex->suiv = sup;
-    st = ex;
-    free(sup);
-    return 1;
-  }
-  else
-  {
-    // tant qu'on a pas atteint la fin de l'ensemble
-    while(sup->suiv != NULL)
-    {
-      // on doit insérer avant le suivant
-      if(sup->suiv->val > e)
-      {
-        Ens ex = malloc(sizeof(struct el));
-        ex->val = e;
-        ex->suiv = sup->suiv;
-        sup->suiv = ex;
-        return 1;
-      }
-      sup = sup->suiv;
-    }
-    // si on doit insérer au bout de l'ensemble
-    sup->val = e;
-    st->suiv = sup;
-    return 1;
-  }
+     return 1;
+   }
+   // si on est au bout de l'ensemble
+   else if(st->suiv == NULL) {
+     Ens ex = malloc(sizeof(struct el));
+     ex->suiv = st->suiv;
+     ex->val = e;
+     st->suiv = ex;
 
-  return 0;
-    /*if(sup->val > e){
-           Ens ex = malloc(sizeof(struct el));
-           ex->suiv = sup->suiv;
-           ex->val = sup->val;
-           sup->val = e;
-           sup->suiv =ex;
+     return 1;
+   }
 
-           return 1;
-       }
-
-
-        while(sup->suiv != NULL) {
-            if(sup->suiv->val >e){
-                Ens ex = malloc(sizeof(struct el));
-                ex->suiv = sup->suiv;
-                ex->val = e;
-                sup->suiv =ex;
-
-                return 1;
-            }
-            sup = sup->suiv;
-        }
-    //    sup2->suiv->val = e;
-        // while(sup->suiv->val < e && sup->suiv != NULL)  sup = sup->suiv;
-        // if(sup->suiv == NULL){
-        //     sup->suiv = initOrderedSet();
-        //     sup->suiv->val = e;
-        // }else{
-        // Ens ex = malloc(sizeof(struct el));
-        // ex->suiv = sup->suiv;
-        // ex->val = e;
-        // sup->suiv =ex;
-        // }
-        // sup->suiv = initOrderedSet();
-        //sup->suiv->val = e;
-
-        return 1;*/
+   insertValue(st->suiv, e);
+   return 1;
 }
 
 bool contains(Ens st, int e){
@@ -128,20 +85,32 @@ bool contains(Ens st, int e){
         }
         return false;
 }
+
 void printOrderedSet(Ens st){
 
-        if(st == NULL) return ;
+        if(st == NULL || st->val == -1) return ;
         Ens sup = st;
         while(sup->suiv != NULL){
-            printf("%d\n", sup->val );
+            printf("%d, ", sup->val );
             sup = sup->suiv;
         }
         printf("%d\n", sup->val );
 }
-Ens intersect(Ens st, Ens st2){
 
-        if(st == NULL || st2 == NULL) return NULL;
-        Ens sup = st; Ens sup2 = st2;
+Ens intersect(Ens st, Ens st2){
+  if(st == NULL || st2 == NULL) return NULL;
+  else {
+    while(st != NULL && st2 != NULL) {
+      if(st->val == st2->val) {
+        insertValue(res, sup->val);
+      }
+      else {
+        intersect(st, st2->suiv);
+      }
+    }
+  }
+
+      /*  Ens sup = st; Ens sup2 = st2;
         Ens res = initOrderedSet();
 
         while(sup->suiv != NULL){
@@ -156,7 +125,7 @@ Ens intersect(Ens st, Ens st2){
 
             sup2 = st2;
             sup = sup->suiv;
-        }
+        }*/
         return res;
 }
 

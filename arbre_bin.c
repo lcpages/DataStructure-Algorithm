@@ -43,7 +43,7 @@ void freeBinarySearchTree(Node abr)
 
 int getNumberString(Node abr)
 {
-  if(abr == NULL)
+  if(abr == NULL || abr->mot == NULL)
   {
     return 0;
   }
@@ -69,10 +69,16 @@ int getTotalNumberString(Node abr)
 
 Node insert(Node abr, char* nouv_mot, int nouv_pos)
 {
-  // si l'arbre est vide : insertion à la racine
   if(abr == NULL)
   {
-    abr->mot = nouv_mot;
+    abr = initBinarySearchTree();
+  }
+  // si l'arbre est vide : insertion à la racine
+  if(abr->mot == NULL)
+  {
+    char* mot = malloc(sizeof(nouv_mot));
+    strcpy(mot, nouv_mot);
+    abr->mot = mot;
     abr->pos = initOrderedSet();
     insertValue(abr->pos, nouv_pos);
   }
@@ -87,7 +93,7 @@ Node insert(Node abr, char* nouv_mot, int nouv_pos)
   }
 
   // sinon recherche dans les branches inférieures
-  else if(strcmp(abr->mot, nouv_mot) < 0)
+  else if(strcmp(abr->mot, nouv_mot) > 0)
   {
     abr->gauche = insert(abr->gauche, nouv_mot, nouv_pos);
   }
@@ -114,7 +120,7 @@ Ens find(Node abr, char* mot)
   }
 
   // sinon recherche dans les branches inférieures
-  else if(strcmp(abr->mot, mot) < 0)
+  else if(strcmp(abr->mot, mot) > 0)
   {
     return(find(abr->gauche, mot));
   }
