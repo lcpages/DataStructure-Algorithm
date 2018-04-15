@@ -43,41 +43,9 @@ int insertValue(Ens st, int e){
   }
 
   Ens sup = st;
-
-  // si la valeur s'insère avant
-  if(sup->val > e)
-  {
-    Ens ex = malloc(sizeof(struct el));
-    ex->val = e;
-    ex->suiv = sup;
-    st = ex;
-    free(sup);
-    return 1;
-  }
-  else
-  {
-    // tant qu'on a pas atteint la fin de l'ensemble
-    while(sup->suiv != NULL)
-    {
-      // on doit insérer avant le suivant
-      if(sup->suiv->val > e)
-      {
-        Ens ex = malloc(sizeof(struct el));
-        ex->val = e;
-        ex->suiv = sup->suiv;
-        sup->suiv = ex;
-        return 1;
-      }
-      sup = sup->suiv;
-    }
-    // si on doit insérer au bout de l'ensemble
-    sup->val = e;
-    st->suiv = sup;
-    return 1;
-  }
-
-  return 0;
-    /*if(sup->val > e){
+  
+    //si la valeur s'insère avant
+    if(sup->val > e){
            Ens ex = malloc(sizeof(struct el));
            ex->suiv = sup->suiv;
            ex->val = sup->val;
@@ -86,9 +54,10 @@ int insertValue(Ens st, int e){
 
            return 1;
        }
-
-
-        while(sup->suiv != NULL) {
+       // tant qu'on a pas atteint la fin de l'ensemble
+        while(sup->suiv != NULL)
+        {
+            // on doit insérer avant le suivant
             if(sup->suiv->val >e){
                 Ens ex = malloc(sizeof(struct el));
                 ex->suiv = sup->suiv;
@@ -99,21 +68,7 @@ int insertValue(Ens st, int e){
             }
             sup = sup->suiv;
         }
-    //    sup2->suiv->val = e;
-        // while(sup->suiv->val < e && sup->suiv != NULL)  sup = sup->suiv;
-        // if(sup->suiv == NULL){
-        //     sup->suiv = initOrderedSet();
-        //     sup->suiv->val = e;
-        // }else{
-        // Ens ex = malloc(sizeof(struct el));
-        // ex->suiv = sup->suiv;
-        // ex->val = e;
-        // sup->suiv =ex;
-        // }
-        // sup->suiv = initOrderedSet();
-        //sup->suiv->val = e;
-
-        return 1;*/
+        return 1;
 }
 
 bool contains(Ens st, int e){
@@ -141,44 +96,24 @@ void printOrderedSet(Ens st){
 Ens intersect(Ens st, Ens st2){
 
         if(st == NULL || st2 == NULL) return NULL;
-        Ens sup = st; Ens sup2 = st2;
+        Ens sup = st; Ens sup2 = st2; //pointeurs de support
         Ens res = initOrderedSet();
 
-        while(sup->suiv != NULL){
-            do{
-
+        do{ //on se déplace dans le premier ensemble
+            do{ //on se déplace dans le deuxième ensemble
                 if(sup->val == sup2->val){
                     insertValue(res, sup->val);
                     break;
                 }
+                if(sup2->suiv == NULL ) break; //si taille de ensemble2 == 1
                 sup2 = sup2->suiv;
+
             }while( sup2->suiv != NULL);
 
+            if(sup->suiv == NULL ) break; //si taille de ensemble == 1
             sup2 = st2;
             sup = sup->suiv;
-        }
+
+        }while(sup->suiv != NULL);
         return res;
 }
-
-
-// int main(int argc, char const *argv[]) {
-//
-//     Ens exemple = initOrderedSet();
-//     Ens exemple2 =initOrderedSet();
-//     insertValue(exemple, 3);
-//     insertValue(exemple, 2);
-//     insertValue(exemple, 1);
-//     insertValue(exemple2, 6);
-//     insertValue(exemple2, 2);
-//     insertValue(exemple2, 4);
-//     //insertValue(exemple2, 1);
-//
-//     printOrderedSet(exemple);
-//     printOrderedSet(exemple2);
-//     printf("\n" );
-//     Ens inter = intersect(exemple, exemple2);
-//     printOrderedSet(inter);
-//     printOrderedSet(exemple2);
-//
-//     return 0;
-// }
