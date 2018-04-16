@@ -36,9 +36,9 @@ void freeBinarySearchTree(Node abr)
     freeBinarySearchTree(abr->droit);
     // puis on libère les attributs du noeud
     freeOrderedSet(abr->pos);
-    free(abr->mot);
     free(abr);
   }
+
 }
 
 int getNumberString(Node abr)
@@ -86,10 +86,11 @@ Node insert(Node abr, char* nouv_mot, int nouv_pos)
   // sinon si le mot à la racine est le même
   else if(strcmp(abr->mot, nouv_mot) == 0)
   {
-    if(!contains(abr->pos, nouv_pos))
-    {
-      insertValue(abr->pos, nouv_pos);
-    }
+     insertValue(abr->pos, nouv_pos);
+    // if(!contains(abr->pos, nouv_pos))
+    // {
+    //   insertValue(abr->pos, nouv_pos);
+    // }
   }
   // sinon recherche dans les branches inférieures
   else if(strcmp(abr->mot, nouv_mot) < 0)

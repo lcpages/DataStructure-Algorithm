@@ -16,7 +16,16 @@ Ens initOrderedSet(){
 
 void freeOrderedSet(Ens st){
 
+    if(st == NULL) // si l'ensemble est nul
+    {
+        return;
+    }
+    else
+    {   //on libère l'espace des éléments chainés. 
+        freeOrderedSet(st->suiv);
         free(st);
+    }
+
 }
 
 int getNumberElt(Ens st){
@@ -43,7 +52,7 @@ int insertValue(Ens st, int e){
   }
 
   Ens sup = st;
-  
+
     //si la valeur s'insère avant
     if(sup->val > e){
            Ens ex = malloc(sizeof(struct el));
@@ -51,7 +60,6 @@ int insertValue(Ens st, int e){
            ex->val = sup->val;
            sup->val = e;
            sup->suiv =ex;
-
            return 1;
        }
        // tant qu'on a pas atteint la fin de l'ensemble
@@ -68,6 +76,8 @@ int insertValue(Ens st, int e){
             }
             sup = sup->suiv;
         }
+        sup->suiv = initOrderedSet();
+        sup->suiv->val = e;
         return 1;
 }
 
