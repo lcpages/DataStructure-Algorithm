@@ -7,42 +7,36 @@
 #include "ensemble.h"
 #include "arbre_bin.h"
 
-// int main()
-// {
-//   Ens a = initOrderedSet();
-//   int nb_el = getNumberElt(a);
-//   printf("Au départ, %d éléments dans a.\n", nb_el);
-//
-//
-//   insertValue(a, 10);
-//   insertValue(a, 11);
-//   printOrderedSet(a);
-//   //insertValue(a, -1);
-//   //insertValue(a, 178);
-//   nb_el = getNumberElt(a);
-//   printf("Après, %d éléments dans a.\n", nb_el);
-//   return 0;
-// }
+int main(int argc, char const *argv[])
+{
 
-int main(int argc, char const *argv[]) {
+    // Ens exemple = initOrderedSet();
+    // Ens exemple2 =initOrderedSet();
+    // insertValue(exemple, 3);
+    // insertValue(exemple, 2);
+    // insertValue(exemple, 1);
+    // insertValue(exemple2, 1);
+    //
+    // printf("Nombre éléments dans exemple : %d\n", getNumberElt(exemple));
+    // printf("Nombre éléments dans exemple2 : %d\n",getNumberElt(exemple2));
+    // //insertValue(exemple2, 1);
+    //
+    // printOrderedSet(exemple);
+    // printOrderedSet(exemple2);
+    // printf("\n" );
+    // Ens inter = intersect(exemple2, exemple);
+    // printOrderedSet(inter);
+    // printOrderedSet(exemple2);
 
-    Ens exemple = initOrderedSet();
-    Ens exemple2 =initOrderedSet();
-    insertValue(exemple, 3);
-    insertValue(exemple, 2);
-    insertValue(exemple, 1);
-    insertValue(exemple2, 1);
+    Node t1 = initBinarySearchTree();
+    insert(t1,"toto", 1);
+    //printBinarySearchTree(t1);
+    insert(t1,"toto", 4);
 
-    printf("Nombre éléments dans exemple : %d\n", getNumberElt(exemple));
-    printf("Nombre éléments dans exemple2 : %d\n",getNumberElt(exemple2));
-    //insertValue(exemple2, 1);
-
-    printOrderedSet(exemple);
-    printOrderedSet(exemple2);
-    printf("\n" );
-    Ens inter = intersect(exemple2, exemple);
-    printOrderedSet(inter);
-    printOrderedSet(exemple2);
+    insert(t1, "tata", 3);
+    insert(t1, "tata", 2);
+    printBinarySearchTree(t1);
+    printf("%s\n", t1->mot);
 
     return 0;
 }

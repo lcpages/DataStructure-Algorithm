@@ -9,10 +9,10 @@
 Node initBinarySearchTree()
 {
   Node abr = (Node)malloc(sizeof(struct noeud));
-  if(abr == NULL)
-  {
-    return NULL;
-  }
+  // if(abr == NULL)
+  // {
+  //   return NULL;
+  // }
 
   // on initialise tous les attributs à NULL
   abr->mot = NULL;
@@ -72,11 +72,17 @@ Node insert(Node abr, char* nouv_mot, int nouv_pos)
   // si l'arbre est vide : insertion à la racine
   if(abr == NULL)
   {
+    abr = initBinarySearchTree();
     abr->mot = nouv_mot;
     abr->pos = initOrderedSet();
     insertValue(abr->pos, nouv_pos);
   }
-
+  else if(abr->mot == NULL)
+  {
+      abr->mot = nouv_mot;
+      abr->pos = initOrderedSet();
+      insertValue(abr->pos, nouv_pos);
+  }
   // sinon si le mot à la racine est le même
   else if(strcmp(abr->mot, nouv_mot) == 0)
   {
@@ -85,7 +91,6 @@ Node insert(Node abr, char* nouv_mot, int nouv_pos)
       insertValue(abr->pos, nouv_pos);
     }
   }
-
   // sinon recherche dans les branches inférieures
   else if(strcmp(abr->mot, nouv_mot) < 0)
   {
