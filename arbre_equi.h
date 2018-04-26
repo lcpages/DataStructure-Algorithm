@@ -21,5 +21,17 @@
 
 //determine si un arbre binaire est équilibré
 bool isBalanced(Node abr);
+//determine la hauteur de l'arbre
+int getHeight(Node abr);
+//determine la hauteur moyenne à chaque noeud
+double getAverageDepth(Node abr);
+//rotation simple à gauche
+Node rotateLeft(Node x);
+//rotation simple à droite
+Node rotateRight(Node y);
+//rotation double à gauche
+Node rotateDoubleLeft(Node x);
+//rotation double à droite
+Node rotateDoubleRight(Node y);
 
 #endif
