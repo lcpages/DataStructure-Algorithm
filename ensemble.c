@@ -21,7 +21,7 @@ void freeOrderedSet(Ens st){
         return;
     }
     else
-    {   //on libère l'espace des éléments chainés. 
+    {   //on libère l'espace des éléments chainés.
         freeOrderedSet(st->suiv);
         free(st);
     }
@@ -84,6 +84,7 @@ int insertValue(Ens st, int e){
 bool contains(Ens st, int e){
 
         if(st == NULL) return false;
+        if(st->val == e ) return true;
         Ens sup = st;
         while(sup->suiv != NULL){
             if(sup->val == e){

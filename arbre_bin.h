@@ -57,6 +57,8 @@ Ens findCooccurrences(Node abr, char* mot1, char* mot2);
 // parcours infixe (ordre alphabétique)
 void printBinarySearchTree(Node abr);
 
+//créer l'arbre binaire de recherche à partir d'un fichier
+Node createAuto(char* chemin); 
 
 
 #endif
