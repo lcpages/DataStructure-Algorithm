@@ -57,8 +57,6 @@ Ens findCooccurrences(Node abr, char* mot1, char* mot2);
 // parcours infixe (ordre alphabétique)
 void printBinarySearchTree(Node abr);
 
-// création automatique de l'ABR à partir d'un texte
-// argument : chemin vers le fichier du texte
-Node createAuto(char* chemin);
+
 
 #endif

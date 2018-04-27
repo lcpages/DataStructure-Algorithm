@@ -1,39 +1,60 @@
 /*
-* fichier arbre_bin.c
+* fichier arbre_equi.c
 * Projet SDA2 printemps 2018
 * Chloé RICHE et Louis-César Pagès
 */
 
 #include "arbre_equi.h"
-#include "arbre_bin.h"
 
-//determine la diffèrence entre chaque noeud
-int isBalancedAux(Node abr)
+int difference (Node abr)
 {
-    if(abr->gauche == NULL && abr->droit == NULL) return 0;
-
-    if(abr->gauche != NULL && abr->droit == NULL) return -1 + isBalanced(abr->gauche);
-    else if(abr->gauche == NULL && abr->droit != NULL) return 1 + isBalanced(abr->droit);
-    else return isBalanced(abr->gauche) + isBalanced(abr->droit);
-
+  if(getHeight(abr) == 0)
+  {
+    return 0;
+  }
+  else
+  {
+    return (getHeight(abr->droit) - getHeight(abr->gauche));
+  }
 }
-bool isBalanced(Node abr)
-{
-    if( isBalancedAux(abr) >1 || isBalancedAux(abr) < -1)
-    return false;
 
+bool isBalanced (Node abr)
+{
+  if(difference(abr) >= -1 && difference(abr) <= 1)
+  {
     return true;
+  }
+
+  return false;
 }
+
 //hauteur d'un arbre
 int getHeight(Node abr)
 {
-    if(abr->gauche == NULL && abr->droit == NULL) return 0;
-
-    if(abr->gauche != NULL && abr->droit == NULL) return 1 + getHeight(abr->gauche);
-    else if(abr->gauche == NULL && abr->droit != NULL) return 1 + getHeight(abr->droit);
-    else if( getHeight(abr->gauche) > getHeight(abr->droit) ) return 1+getHeight(abr->gauche);
-    else return 1+getHeight(abr->droit);
+  // arbre vide
+  if(abr == NULL)
+  {
+    return 0;
+  }
+  // racine uniquement
+  else if(abr->gauche == NULL && abr->droit == NULL)
+  {
+    return 1;
+  }
+  // si l'arbre a des branches après la racine
+  else
+  {
+    if(getHeight(abr->gauche) >= getHeight(abr->droit))
+    {
+      return 1 + getHeight(abr->gauche);
+    }
+    else
+    {
+      return 1 + getHeight(abr->droit);
+    }
+  }
 }
+
 //calcule le total des hauteurs d'un arbre
 double getAverageDepthAux(Node abr)
 {
@@ -53,6 +74,7 @@ double getAverageDepthAux(Node abr)
     }
 
 }
+
 //determine la moyenne des hauteurs d'un arbre
 double getAverageDepth(Node abr)
 {
@@ -61,47 +83,85 @@ double getAverageDepth(Node abr)
 
 Node rotateRight(Node y)
 {
-    Node x = y->left;
-    Node T2 = x->right;
+    Node x = y->gauche;
+    Node T2 = x->droit;
 
-    x->right = y;
-    y->left = T2;
+    y->gauche = T2;
+    x->droit = y;
 
     return x;
 }
+
 Node rotateLeft(Node x)
 {
-    Node y = x->right;
-    Node T2 = y->left;
+    Node y = x->droit;
+    Node T2 = y->gauche;
 
-    y->left = x;
-    x->right = T2;
+    x->droit = T2;
+    y->gauche = x;
 
     return y;
 }
-Node rotateDoubleRight(Node y)
+
+Node rotateDoubleRight(Node A)
 {
-    Node y = x->gauche;
-    Node z = y->droite;
-    Node T2 = z->right;
+    Node C = A->droit;
+    Node D = C->gauche;
+    Node F = D->gauche;
+    Node G = D->droit;
 
-    y->right = z->left;
-    z->left = y;
-    z->right = x;
-    x->left = T2;
+    A->droit = F;
+    D->gauche = A;
+    C->gauche = G;
+    D->droit = C;
 
-    return z;
+    return D;
 }
-Node rotateDoubleLeft(Node x)
+
+Node rotateDoubleLeft(Node A)
 {
-    Node y = x->droite;
-    Node z = y->gauche;
-    Node T2 = z->gauche;
+    Node B = A->gauche;
+    Node E = B->droit;
+    Node F = E->gauche;
+    Node G = E->droit;
 
-    y->left = z->right;
-    z->left = x;
-    z->right = y;
-    x->right = T2;
+    B->droit = F;
+    E->gauche = B;
+    A->gauche = G;
+    E->droit = A;
 
-    return z;
+    return E;
+}
+
+Node getBalancedTree (Node abr)
+{
+  // si on a besoin d'équilibrer
+  if(!isBalanced(abr))
+  {
+    // branche droite trop grande
+    if(difference(abr) == 2)
+    {
+      if(difference(abr->droit) == 1)
+      {
+        return rotateLeft(abr);
+      }
+      else if(difference(abr->droit) == -1)
+      {
+        return rotateDoubleRight(abr);
+      }
+    }
+    // branche gauche trop grande
+    else if(difference(abr) == -2)
+    {
+      if(difference(abr->gauche) == -1)
+      {
+        return rotateRight(abr);
+      }
+      else if(difference(abr->gauche) == 1)
+      {
+        return rotateDoubleLeft(abr);
+      }
+    }
+  }
+  return abr;
 }
