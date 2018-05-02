@@ -84,13 +84,16 @@ int insertValue(Ens st, int e){
 bool contains(Ens st, int e){
 
         if(st == NULL) return false;
-        if(st->val == e ) return true;
+        if(st->val == e ) return true; //vérifie la 1er valeur
         Ens sup = st;
-        while(sup->suiv != NULL){
+        while(sup->suiv != NULL){ //vérifie les valeurs intermédiaires
             if(sup->val == e){
                 return true;
             }
             sup = sup->suiv;
+        }
+        if(sup->val == e){ //vérifie la dernière valeur
+            return true;
         }
         return false;
 }
