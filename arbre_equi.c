@@ -37,14 +37,14 @@ int getHeight(Node abr)
     return 0;
   }
   // racine uniquement
-  else if(abr->gauche == NULL && abr->droit == NULL)
+  if(abr->gauche == NULL && abr->droit == NULL)
   {
     return 1;
   }
   // si l'arbre a des branches après la racine
   else
   {
-    if(getHeight(abr->gauche) >= getHeight(abr->droit))
+    if(getHeight(abr->gauche) > getHeight(abr->droit))
     {
       return 1 + getHeight(abr->gauche);
     }
@@ -55,7 +55,7 @@ int getHeight(Node abr)
   }
 }
 
-//calcule le total des hauteurs d'un arbre
+//calcule la moyenne des hauteurs à chaque noeud d'un arbre
 double getAverageDepthAux(Node abr)
 {
     if(abr->gauche == NULL && abr->droit == NULL) return 0;
@@ -84,7 +84,7 @@ double getAverageDepth(Node abr)
 Node rotateRight(Node y)
 {
     Node x = y->gauche;
-    Node T2 = x->droit;
+    Node T2 = y->gauche->droit;
 
     y->gauche = T2;
     x->droit = y;
@@ -141,27 +141,29 @@ Node getBalancedTree (Node abr)
     // branche droite trop grande
     if(difference(abr) == 2)
     {
-      if(difference(abr->droit) == 1)
+      if(difference(abr->droit) <= 1)
       {
-        return rotateLeft(abr);
+        abr->droit = rotateLeft(abr->droit);
       }
-      else if(difference(abr->droit) == -1)
+      else if(difference(abr->droit) >= -1)
       {
-        return rotateDoubleRight(abr);
+        abr->droit = rotateDoubleRight(abr->droit);
       }
     }
     // branche gauche trop grande
     else if(difference(abr) == -2)
     {
-      if(difference(abr->gauche) == -1)
+      if(difference(abr->gauche) <= -1)
       {
-        return rotateRight(abr);
+        abr->gauche = rotateRight(abr->gauche);
       }
-      else if(difference(abr->gauche) == 1)
+      else if(difference(abr->gauche) >= 1)
       {
-        return rotateDoubleLeft(abr);
+        abr->gauche = rotateDoubleLeft(abr->gauche);
       }
     }
+    else if(difference(abr)>2) getBalancedTree(abr->droit);
+    else if(difference(abr)<-2) getBalancedTree(abr->gauche);
   }
   return abr;
 }

@@ -13,6 +13,19 @@ int main(int argc, char const *argv[])
     Node t = createAuto("phrases.txt");
     //printOrderedSet(t->pos);
     printBinarySearchTree(t);
+    //getBalancedTree(t);
+    printf("\n" );
+//    printf("%s  %s\n",t->gauche->gauche->droit->mot, t->gauche->gauche->mot  );
+    printf("%s  %s\n",t->gauche->gauche->gauche->mot, t->gauche->gauche->gauche->gauche->mot  );
+    printf("\n %d ",difference(t) );
+    printf("%d\n",difference(t->gauche) );
+    getBalancedTree(t);
+    printf("%d\n",difference(t->gauche) );
+    printf("%s  %s\n",t->gauche->gauche->gauche->mot, t->gauche->droit->mot  );
+    printBinarySearchTree(t);
+    printf("\n %d \n",difference(t) );
+
+    // printBinarySearchTree(t);
     freeBinarySearchTree(t);
 
     // char * mot1 = "i";

@@ -102,7 +102,7 @@ void printOrderedSet(Ens st){
         if(st == NULL) return ;
         Ens sup = st;
         while(sup->suiv != NULL){
-            printf("%d\n", sup->val );
+            printf("%d ", sup->val );
             sup = sup->suiv;
         }
         printf("%d\n", sup->val );
