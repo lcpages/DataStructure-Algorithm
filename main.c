@@ -16,12 +16,13 @@ int main(int argc, char const *argv[])
     //getBalancedTree(t);
     printf("\n" );
 //    printf("%s  %s\n",t->gauche->gauche->droit->mot, t->gauche->gauche->mot  );
-    printf("%s  %s\n",t->gauche->gauche->gauche->mot, t->gauche->gauche->gauche->gauche->mot  );
+    printf("%s  %s\n",t->gauche->gauche->gauche->gauche->gauche->droit->mot, t->gauche->gauche->gauche->mot  );
     printf("\n %d ",difference(t) );
-    printf("%d\n",difference(t->gauche) );
-    getBalancedTree(t);
-    printf("%d\n",difference(t->gauche) );
-    printf("%s  %s\n",t->gauche->gauche->gauche->mot, t->gauche->droit->mot  );
+    printf("%d\n",difference(t->gauche->gauche->gauche) );
+    t = getBalancedTree(t);
+    //t = rotateRight(t);
+    // printf("%d\n",difference(t->gauche->gauche->gauche) );
+    // printf("%s  %s\n",t->gauche->gauche->gauche->mot, t->gauche->droit->mot  );
     printBinarySearchTree(t);
     printf("\n %d \n",difference(t) );
 

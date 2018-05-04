@@ -139,31 +139,31 @@ Node getBalancedTree (Node abr)
   if(!isBalanced(abr))
   {
     // branche droite trop grande
-    if(difference(abr) == 2)
+    if(difference(abr) >= 2 )
     {
       if(difference(abr->droit) <= 1)
       {
-        abr->droit = rotateLeft(abr->droit);
+        abr = rotateLeft(abr);
       }
       else if(difference(abr->droit) >= -1)
       {
-        abr->droit = rotateDoubleRight(abr->droit);
+        abr= rotateDoubleRight(abr);
       }
     }
     // branche gauche trop grande
-    else if(difference(abr) == -2)
+    else if(difference(abr) <= -2)
     {
       if(difference(abr->gauche) <= -1)
       {
-        abr->gauche = rotateRight(abr->gauche);
+        abr = rotateRight(abr);
       }
       else if(difference(abr->gauche) >= 1)
       {
-        abr->gauche = rotateDoubleLeft(abr->gauche);
+        abr = rotateDoubleLeft(abr);
       }
     }
-    else if(difference(abr)>2) getBalancedTree(abr->droit);
-    else if(difference(abr)<-2) getBalancedTree(abr->gauche);
+    if(difference(abr)>=2) abr = getBalancedTree(abr);
+    if(difference(abr)<=-2) abr = getBalancedTree(abr);
   }
   return abr;
 }
