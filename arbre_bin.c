@@ -193,7 +193,7 @@ Node createAuto(char* chemin)
                     exit(EXIT_FAILURE);
                 }
                 // insertion du mot et du numéro de ligne
-                insert(abr, str, nb_line);
+                insert(abr, str, nb_line-1);
                 lseek(fd, 1, SEEK_CUR);
 
                 nb_char = 0;
