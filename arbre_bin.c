@@ -184,6 +184,18 @@ Node createAuto(char* chemin)
             if(buffer[0] == '\n')
             {
                 nb_line++;
+
+                lseek(fd, -1 - nb_char, SEEK_CUR);
+                char * str = malloc(nb_char);
+                if(read(fd, str, nb_char) == -1)
+                {
+                    perror("read");
+                    exit(EXIT_FAILURE);
+                }
+                // insertion du mot et du numéro de ligne
+                insert(abr, str, nb_line);
+                lseek(fd, 1, SEEK_CUR);
+
                 nb_char = 0;
             }
             // au cas où on a plusieurs espaces/retours chariot
