@@ -12,8 +12,8 @@ int main(int argc, char const *argv[])
 {
 	/*printf("\n#######################################################\n");
 
-	printf("TEXT 1 : phrases.txt\n\n");
-    Node t = createAuto("phrases.txt");
+	printf("TEXT 1 : mots.txt\n\n");
+    Node t = createAuto("mots.txt");
     printf("\nUnbalanced tree : \n");
     printTabBinarySearchTree(t, 0);
     
@@ -24,9 +24,10 @@ int main(int argc, char const *argv[])
     printf("\n\nAlphabetical order display : \n");
     printBinarySearchTree(t);
     freeBinarySearchTree(t);*/
-    
-    Node t = createAuto("phrases.txt");
+    Node t = initBinarySearchTree();
+    insert(t, "hello", 2);
+    insert(t, "coucou", 5);
+    insert(t, "coucou", 3);
     freeBinarySearchTree(t);
-
     return 0;
 }

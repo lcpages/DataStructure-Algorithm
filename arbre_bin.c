@@ -36,10 +36,10 @@ void freeBinarySearchTree(Node abr)
     freeBinarySearchTree(abr->gauche);
     freeBinarySearchTree(abr->droit);
     // puis on libère les attributs du noeud
+		free(abr->mot);
     freeOrderedSet(abr->pos);
     free(abr);
   }
-
 }
 
 int getNumberString(Node abr)
@@ -74,15 +74,17 @@ Node insert(Node abr, char* nouv_mot, int nouv_pos)
   if(abr == NULL)
   {
     abr = initBinarySearchTree();
-    abr->mot = nouv_mot;
+    abr->mot = malloc(sizeof(nouv_mot));
+		strcpy(abr->mot, nouv_mot);
     abr->pos = initOrderedSet();
     insertValue(abr->pos, nouv_pos);
   }
   else if(abr->mot == NULL)
   {
-      abr->mot = nouv_mot;
-      abr->pos = initOrderedSet();
-      insertValue(abr->pos, nouv_pos);
+		abr->mot = malloc(sizeof(nouv_mot));
+		strcpy(abr->mot, nouv_mot);
+		abr->pos = initOrderedSet();
+		insertValue(abr->pos, nouv_pos);
   }
   // sinon si le mot à la racine est le même
   else if(strcmp(nouv_mot, abr->mot) == 0)
@@ -186,7 +188,7 @@ void printTabBinarySearchTree (Node abr, int nodeHeight)
 Node createAuto(char* chemin)
 {
   int fd, nb_char = 0, nb_line = 1;
-  char c, buffer[1];
+  char c, buffer[1]; 
 
   // ouverture du fichier
   if((fd = open(chemin, O_RDONLY)) == -1)
@@ -204,49 +206,41 @@ Node createAuto(char* chemin)
         // si on a finit le mot ou la ligne précédent(e)
         if((buffer[0] == ' ') || buffer[0] == '\'' || (buffer[0] == '\n'))
         {
-            // si on a sauté une ligne
-            if(buffer[0] == '\n')
-            {
-                nb_line++;
-
-                lseek(fd, -1 - nb_char, SEEK_CUR);
-                char * str = malloc(nb_char);
-                if(read(fd, str, nb_char) == -1)
-                {
-                    perror("read");
-                    exit(EXIT_FAILURE);
-                }
-                // insertion du mot et du numéro de ligne
-                insert(abr, str, nb_line-1);
-                lseek(fd, 1, SEEK_CUR);
-
-                nb_char = 0;
-            }
-            // au cas où on a plusieurs espaces/retours chariot
-            else if(nb_char > 0)
-            {
-                // on retourne juste avant le mot
-                lseek(fd, -1 - nb_char, SEEK_CUR);
-                char * str = malloc(nb_char);
-
-                if(read(fd, str, nb_char) == -1)
-                {
-                    perror("read");
-                    exit(EXIT_FAILURE);
-                }
-                // insertion du mot et du numéro de ligne
-                insert(abr, str, nb_line);
-
-            // on se replace 1 caractère après le mot (comme avant)
-                lseek(fd, 1, SEEK_CUR);
-                nb_char = 0;
-            }
+					if(nb_char > 0)
+					{
+						// on retourne juste avant le mot
+						lseek(fd, -1 - nb_char, SEEK_CUR);
+						char* str = malloc(nb_char + 1);
+						
+						if(str == NULL)
+						{
+							perror("malloc");
+							exit(EXIT_FAILURE);
+						}
+						if(read(fd, str, nb_char) == -1)
+						{
+								perror("read");
+								exit(EXIT_FAILURE);
+						}
+						str[nb_char] = '\0';
+						
+						// insertion du mot et du numéro de ligne
+						insert(abr, str, nb_line);
+						free(str);
+						lseek(fd, 1, SEEK_CUR);
+						
+						// si on a sauté une ligne
+						if(buffer[0] == '\n')
+						{
+							nb_line++;
+						}
+						nb_char = 0;
+					}
         }
         else
         {
             nb_char++;
         }
-
      }
     // fermeture du fichier
     if(close(fd) == -1)
@@ -254,7 +248,7 @@ Node createAuto(char* chemin)
         perror("close");
         exit(EXIT_FAILURE);
     }
-
+		
   // on renvoie l'ABR complété
   return abr;
 }
