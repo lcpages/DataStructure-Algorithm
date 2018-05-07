@@ -49,8 +49,6 @@ Node insert(Node abr, char* nouv_mot, int nouv_pos);
 // retrouve tous les indices d'occurrence du mot
 Ens find(Node abr, char* mot);
 // permet de retrouver tous les indices de co-occurrence des mots
-// 2 pour le moment
-// fonction variadique ?
 Ens findCooccurrences(Node abr, char* mot1, char* mot2);
 
 // affiche l'ABR
