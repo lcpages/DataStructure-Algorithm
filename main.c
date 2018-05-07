@@ -10,10 +10,39 @@
 
 int main(int argc, char const *argv[])
 {
-	/*printf("\n#######################################################\n");
+    printf("\n#######################################################\n");
 
-	printf("TEXT 1 : mots.txt\n\n");
-    Node t = createAuto("mots.txt");
+	printf("TEST 1 : ordered set\n\n");
+    Ens e = initOrderedSet();
+    insertValue(e, 1);
+    insertValue(e, 10);
+    insertValue(e, 5);
+    insertValue(e, 1678554);
+    printf("The ordered set :\n");
+    printOrderedSet(e);
+
+    if(contains(e, 10)) printf("The ordered set contains the value 10.\n");
+    printf("It contains %d elements.\n", getNumberElt(e));
+    
+    Ens e2 = initOrderedSet();
+    insertValue(e2, 12);
+    insertValue(e2, 105);
+    insertValue(e2, 5);
+    insertValue(e2, 164);
+    
+    printf("\nThe second ordered set :\n");
+    printOrderedSet(e2);
+    
+    printf("\nThe intersection of the two sets is :\n");
+    printOrderedSet(intersect(e, e2));
+    
+    freeOrderedSet(e);
+    freeOrderedSet(e2);
+    
+	printf("\n#######################################################\n");
+
+	printf("TEST 2 : automatic tree balancing\n\n");
+    Node t = createAuto("phrases.txt");
     printf("\nUnbalanced tree : \n");
     printTabBinarySearchTree(t, 0);
     
@@ -23,11 +52,12 @@ int main(int argc, char const *argv[])
     
     printf("\n\nAlphabetical order display : \n");
     printBinarySearchTree(t);
-    freeBinarySearchTree(t);*/
-    Node t = initBinarySearchTree();
-    insert(t, "hello", 2);
-    insert(t, "coucou", 5);
-    insert(t, "coucou", 3);
+    
+    printf("\n#######################################################\n");
+
+	printf("TEST 3 : tree height, values and \n\n");
+    
+    
     freeBinarySearchTree(t);
     return 0;
 }
