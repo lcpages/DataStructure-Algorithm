@@ -54,6 +54,8 @@ Ens findCooccurrences(Node abr, char* mot1, char* mot2);
 // affiche l'ABR
 // parcours infixe (ordre alphabétique)
 void printBinarySearchTree(Node abr);
+// parcours de la racine vers les feuilles
+void printTabBinarySearchTree (Node abr, int nodeHeight);
 
 //créer l'arbre binaire de recherche à partir d'un fichier
 Node createAuto(char* chemin); 

@@ -5,6 +5,7 @@
 */
 
 #include "arbre_bin.h"
+#include "arbre_equi.h"
 
 Node initBinarySearchTree()
 {
@@ -159,6 +160,29 @@ void printBinarySearchTree(Node abr)
     printBinarySearchTree(abr->droit);
   }
 }
+
+void printTabBinarySearchTree (Node abr, int nodeHeight)
+{
+	int i, nodeHgt = nodeHeight;
+	if(abr != NULL)
+	{
+		for(i = 0; i < nodeHgt; i++)
+			printf("  ");
+		printf("%s\n", abr->mot);
+		for(i = 0; i < nodeHgt; i++)
+			printf("  ");
+		printOrderedSet(abr->pos);
+	}
+	  if(abr->gauche != NULL)
+  {
+    printTabBinarySearchTree(abr->gauche, nodeHgt + 1);
+  }
+    if(abr->droit != NULL)
+  {
+    printTabBinarySearchTree(abr->droit, nodeHgt + 1);
+  }
+}
+
 Node createAuto(char* chemin)
 {
   int fd, nb_char = 0, nb_line = 1;
@@ -178,7 +202,7 @@ Node createAuto(char* chemin)
     while((c = read(fd, buffer, 1)) > 0)
     {
         // si on a finit le mot ou la ligne précédent(e)
-        if((buffer[0] == ' ') || (buffer[0] == '\n'))
+        if((buffer[0] == ' ') || buffer[0] == '\'' || (buffer[0] == '\n'))
         {
             // si on a sauté une ligne
             if(buffer[0] == '\n')
