@@ -34,38 +34,45 @@ int main(int argc, char const *argv[])
     printOrderedSet(e2);
     
     printf("\nThe intersection of the two sets is :\n");
-    printOrderedSet(intersect(e, e2));
+    Ens e3 = intersect(e, e2);
+    printOrderedSet(e3);
     
     freeOrderedSet(e);
     freeOrderedSet(e2);
+    freeOrderedSet(e3);
     
 	printf("\n#######################################################\n");
 
 	printf("TEST 2 : automatic tree balancing\n\n");
-    Node t = createAuto("phrases.txt");
+    Node t = createAuto("lorem_simple.txt");
     printf("\nUnbalanced tree : \n");
     printTabBinarySearchTree(t, 0);
+    printf("The root has a difference of %d.\n", difference(t));
 
     t = getBalancedTree(t);
     printf("\n\nAfter balancing : \n");
     printTabBinarySearchTree(t, 0);
+    printf("The root has a difference of %d.\n", difference(t));
 
     printf("\n\nAlphabetical order display : \n");
     printBinarySearchTree(t);
-<<<<<<< HEAD
-    freeBinarySearchTree(t);*/
-
-    Node t = createAuto("phrases.txt");
-    printf("%lf\n",getAverageDepth(t)); 
     freeBinarySearchTree(t);
-=======
     
     printf("\n#######################################################\n");
->>>>>>> bdb9972c5f57407d8444aed979060d1eeb0588c4
 
-	printf("TEST 3 : tree height, values and \n\n");
+	printf("TEST 3 : tree height, values with a big tree\n\n");
     
+    Node b = createAuto("lorem_long.txt");
+    printf("The tree has a height of : %d.\n", getHeight(b));
+    printf("The average depth for a node is : %lf.\n\n", getAverageDepth(b));
+    printf("The tree has %d words/nodes.\n", getNumberString(b));
+    printf("The tree has %d pairs word-sentence.\n\n", getTotalNumberString(b));
     
-    freeBinarySearchTree(t);
+    printf("The words lorem and ipsum appear both on the line(s) :\n");
+    Ens i = findCooccurrences(b, "lorem", "ipsum");
+    printOrderedSet(i);
+    
+    freeOrderedSet(i);
+    freeBinarySearchTree(b);
     return 0;
 }

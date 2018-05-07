@@ -44,7 +44,7 @@ int getTotalNumberString(Node abr);
 
 // insertion d'une nouvelle paire mot-position dans l'abr
 // retourne l'arbre modifié si besoin
-Node insert(Node abr, char* nouv_mot, int nouv_pos);
+Node insert(Node abr, char* nouv_mot, int size, int nouv_pos);
 
 // retrouve tous les indices d'occurrence du mot
 Ens find(Node abr, char* mot);

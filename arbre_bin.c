@@ -68,20 +68,20 @@ int getTotalNumberString(Node abr)
   }
 }
 
-Node insert(Node abr, char* nouv_mot, int nouv_pos)
+Node insert(Node abr, char* nouv_mot, int size, int nouv_pos)
 {
   // si l'arbre est vide : insertion à la racine
   if(abr == NULL)
   {
     abr = initBinarySearchTree();
-    abr->mot = malloc(sizeof(nouv_mot));
+    abr->mot = malloc(size);
 		strcpy(abr->mot, nouv_mot);
     abr->pos = initOrderedSet();
     insertValue(abr->pos, nouv_pos);
   }
   else if(abr->mot == NULL)
   {
-		abr->mot = malloc(sizeof(nouv_mot));
+		abr->mot = malloc(size);
 		strcpy(abr->mot, nouv_mot);
 		abr->pos = initOrderedSet();
 		insertValue(abr->pos, nouv_pos);
@@ -94,11 +94,11 @@ Node insert(Node abr, char* nouv_mot, int nouv_pos)
   // sinon recherche dans les branches inférieures
   else if(strcmp(nouv_mot, abr->mot) < 0)
   {
-    abr->gauche = insert(abr->gauche, nouv_mot, nouv_pos);
+    abr->gauche = insert(abr->gauche, nouv_mot, size, nouv_pos);
   }
   else
   {
-    abr->droit = insert(abr->droit, nouv_mot, nouv_pos);
+    abr->droit = insert(abr->droit, nouv_mot, size, nouv_pos);
   }
 
   return abr;
@@ -119,7 +119,7 @@ Ens find(Node abr, char* mot)
   }
 
   // sinon recherche dans les branches inférieures
-  else if(strcmp(abr->mot, mot) < 0)
+  else if(strcmp(abr->mot, mot) > 0)
   {
     return(find(abr->gauche, mot));
   }
@@ -210,7 +210,7 @@ Node createAuto(char* chemin)
 					{
 						// on retourne juste avant le mot
 						lseek(fd, -1 - nb_char, SEEK_CUR);
-						char* str = malloc(nb_char + 1);
+						char* str = malloc(nb_char +1);
 						
 						if(str == NULL)
 						{
@@ -222,10 +222,20 @@ Node createAuto(char* chemin)
 								perror("read");
 								exit(EXIT_FAILURE);
 						}
+						// end of the word
+						if((str[nb_char-1] == '.') || (str[nb_char-1] == ','))
+						{
+							str[nb_char-1] = '\0';
+						}
 						str[nb_char] = '\0';
 						
+						// maj to min
+						if(str[0] <= 90)
+						{
+							str[0] += 'a' - 'A';
+						}
 						// insertion du mot et du numéro de ligne
-						insert(abr, str, nb_line);
+						insert(abr, str, nb_char + 1, nb_line);
 						free(str);
 						lseek(fd, 1, SEEK_CUR);
 						
@@ -242,6 +252,49 @@ Node createAuto(char* chemin)
             nb_char++;
         }
      }
+		 
+		 if(nb_char > 0)
+		 					{
+						// on retourne juste avant le mot
+						lseek(fd, - nb_char, SEEK_CUR);
+						printf("NBCHARRRRRR %d\n", nb_char);
+						char* str = malloc(nb_char + 1);
+						
+						if(str == NULL)
+						{
+							perror("malloc");
+							exit(EXIT_FAILURE);
+						}
+						if(read(fd, str, nb_char) == -1)
+						{
+								perror("read");
+								exit(EXIT_FAILURE);
+						}
+						// end of the word
+						if((str[nb_char-1] == '.') || (str[nb_char-1] == ','))
+						{
+							str[nb_char-1] = '\0';
+						}
+						str[nb_char] = '\0';
+						
+						// maj to min
+						if(str[0] <= 90)
+						{
+							str[0] += 'a' - 'A';
+						}
+						// insertion du mot et du numéro de ligne
+						insert(abr, str, nb_char + 1, nb_line);
+						free(str);
+						lseek(fd, 1, SEEK_CUR);
+						
+						// si on a sauté une ligne
+						if(buffer[0] == '\n')
+						{
+							nb_line++;
+						}
+						nb_char = 0;
+					}
+		
     // fermeture du fichier
     if(close(fd) == -1)
     {
