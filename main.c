@@ -16,16 +16,17 @@ int main(int argc, char const *argv[])
     Node t = createAuto("phrases.txt");
     printf("\nUnbalanced tree : \n");
     printTabBinarySearchTree(t, 0);
-    
+
     t = getBalancedTree(t);
     printf("\n\nAfter balancing : \n");
     printTabBinarySearchTree(t, 0);
-    
+
     printf("\n\nAlphabetical order display : \n");
     printBinarySearchTree(t);
     freeBinarySearchTree(t);*/
-    
+
     Node t = createAuto("phrases.txt");
+    printf("%lf\n",getAverageDepth(t)); 
     freeBinarySearchTree(t);
 
     return 0;

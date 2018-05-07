@@ -119,6 +119,10 @@ Ens intersect(Ens st, Ens st2){
                     insertValue(res, sup->val);
                     break;
                 }
+                if(sup->val < sup2->val) break ; /*les ensembles étant ordonnés
+                                                *on arrête la comparaison si
+                                                *la valeur de l'en1 devient plus petit
+                                                *qu'un ele de l'en2 */ 
                 if(sup2->suiv == NULL ) break; //si taille de ensemble2 == 1
                 sup2 = sup2->suiv;
 

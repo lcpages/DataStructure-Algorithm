@@ -62,15 +62,15 @@ double getAverageDepthAux(Node abr)
 
     if(abr->gauche != NULL && abr->droit == NULL)
     {
-        return (getHeight(abr) + getHeight(abr->gauche));
+        return (getHeight(abr) + getAverageDepthAux(abr->gauche));
     }
     else if(abr->gauche == NULL && abr->droit != NULL)
     {
-        return (getHeight(abr) + getHeight(abr->droit));
+        return (getHeight(abr) + getAverageDepthAux(abr->droit));
     }
     else
     {
-        return (getHeight(abr) + getHeight(abr->droit) + getHeight(abr->gauche));
+        return (getHeight(abr) + getAverageDepthAux(abr->droit) + getAverageDepthAux(abr->gauche));
     }
 
 }
